@@ -52,7 +52,7 @@ public:
     {
         for (int i = 0; i < _w * _h; ++i)
         {
-            buffer[i] = static_cast<T>(color);
+            _buffer[i] = static_cast<T>(color);
         }
     }
 

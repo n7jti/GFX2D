@@ -23,9 +23,13 @@ void render(const Gfx2dCanvas<T, WIDTH, HEIGHT> &canvas)
 int main(void)
 {
     printf("Hello World!\n");
-    canvas.writeFastHLine(0, 0, 5, 1);
-    canvas.writeFastVLine(0, 0, 5, 1);
-    canvas.writeLine(2, 2, 6, 8, 1);
-    render(canvas);
+    for (int i = 0; i < 8; i++)
+    {
+        canvas.fillScreen(0);
+        canvas.writeLine(7, 0, 0, i, 1);
+        render(canvas);
+        printf("\n\n");
+    }
+
     return 0;
 }

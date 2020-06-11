@@ -45,14 +45,15 @@ void Gfx2d::writeLineLow(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_
 {
     int32_t dx = x1 - x0;
     int32_t dy = y1 - y0;
-    int32_t d = 2 * dy - dx;
-
     int32_t yi = 1;
+
     if (dy < 0)
     {
         yi = -1;
         dy = -dy;
     }
+
+    int32_t d = 2 * dy - dx;
 
     int32_t incrE = 2 * dy;
     int32_t incrNE = 2 * (dy - dx);
@@ -83,14 +84,13 @@ void Gfx2d::writeLineHigh(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32
     // Principles and pratice" Second Edition in C by Foley, Dam , et al. (c) 1996
     int32_t dx = x1 - x0;
     int32_t dy = y1 - y0;
-    int32_t d = 2 * dx - dy;
     int32_t xi = 1;
     if (dx < 0)
     {
         xi = -1;
         dx = -dy;
     }
-
+    int32_t d = 2 * dx - dy;
     int32_t incrE = 2 * dx;
     int32_t incrNE = 2 * (dx - dy);
 
@@ -125,7 +125,7 @@ void Gfx2d::writeLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t c
         {
             writeLineLow(x1, y1, x0, y0, color);
         }
-        else if (x0 > x1)
+        else if (x0 < x1)
         {
             writeLineLow(x0, y0, x1, y1, color);
         }
