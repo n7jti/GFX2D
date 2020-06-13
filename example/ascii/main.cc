@@ -20,16 +20,102 @@ void render(const Gfx2dCanvas<T, WIDTH, HEIGHT> &canvas)
     return;
 }
 
-int main(void)
+void NW(void)
 {
-    printf("Hello World!\n");
+    printf("NW\n\n");
+
+    // east
     for (int i = 0; i < 8; i++)
+    {
+        canvas.fillScreen(0);
+        canvas.writeLine(0, 0, 7, i, 1);
+        render(canvas);
+        printf("\n\n");
+    }
+
+    //south
+    for (int i = 7; i >= 0; i--)
+    {
+        canvas.fillScreen(0);
+        canvas.writeLine(0, 0, i, 7, 1);
+        render(canvas);
+        printf("\n\n");
+    }
+}
+
+void NE(void)
+{
+    printf("NE\n\n");
+
+    //south
+    for (int i = 7; i >= 0; i--)
+    {
+        canvas.fillScreen(0);
+        canvas.writeLine(7, 0, i, 7, 1);
+        render(canvas);
+        printf("\n\n");
+    }
+
+    //west
+    for (int i = 7; i >= 0; i--)
     {
         canvas.fillScreen(0);
         canvas.writeLine(7, 0, 0, i, 1);
         render(canvas);
         printf("\n\n");
     }
+}
 
+void SE(void)
+{
+    printf("SE\n\n");
+
+    //north
+    for (int i = 7; i >= 0; i--)
+    {
+        canvas.fillScreen(0);
+        canvas.writeLine(7, 7, i, 0, 1);
+        render(canvas);
+        printf("\n\n");
+    }
+
+    //west
+    for (int i = 0; i <= 7; i++)
+    {
+        canvas.fillScreen(0);
+        canvas.writeLine(7, 7, 0, i, 1);
+        render(canvas);
+        printf("\n\n");
+    }
+}
+
+void SW(void)
+{
+    printf("SW\n\n");
+    // east
+    for (int i = 7; i >= 0; i--)
+    {
+        canvas.fillScreen(0);
+        canvas.writeLine(0, 7, 7, i, 1);
+        render(canvas);
+        printf("\n\n");
+    }
+
+    //north
+    for (int i = 7; i >= 0; i--)
+    {
+        canvas.fillScreen(0);
+        canvas.writeLine(0, 7, i, 0, 1);
+        render(canvas);
+        printf("\n\n");
+    }
+}
+
+int main(void)
+{
+    NE();
+    NW();
+    SW();
+    SE();
     return 0;
 }

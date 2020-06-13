@@ -88,7 +88,7 @@ void Gfx2d::writeLineHigh(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32
     if (dx < 0)
     {
         xi = -1;
-        dx = -dy;
+        dx = -dx;
     }
     int32_t d = 2 * dx - dy;
     int32_t incrE = 2 * dx;
