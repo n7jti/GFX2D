@@ -125,42 +125,22 @@ void Gfx2d::writeLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t c
         {
             writeLineLow(x1, y1, x0, y0, color);
         }
-        else if (x0 < x1)
+        else
         {
             writeLineLow(x0, y0, x1, y1, color);
-        }
-        else //x0 == x1
-        {
-            if (y0 < y1)
-            {
-                writeFastVLine(x0, y0, y1 - y0, color);
-            }
-            else
-            {
-                writeFastVLine(x0, y1, y0 - y1, color);
-            }
         }
     }
     else
     {
         if (y0 > y1)
         {
-            writeLineHigh(x1, y1, x0, y0, color);
+            //writeLineHigh(x1, y1, x0, y0, color);
+            writeLineLow(y1, x1, y0, x0, color);
         }
-        else if (y0 < y1)
+        else
         {
-            writeLineHigh(x0, y0, x1, y1, color);
-        }
-        else // y0 == y1
-        {
-            if (x0 < x1)
-            {
-                writeFastHLine(x0, y0, x1 - x0, color);
-            }
-            else
-            {
-                writeFastHLine(x1, y0, x0 - x1, color);
-            }
+            //writeLineHigh(x0, y0, x1, y1, color);
+            writeLineLow(y0, x0, y1, x1, color);
         }
     }
 }
@@ -170,4 +150,15 @@ void Gfx2d::writePixel(int32_t x, int32_t y, uint32_t color)
     // Default implementation falls through to setPixel
     setPixel(x, y, color);
     return;
+}
+
+void Gfx2d::fillScreen(uint32_t color)
+{
+    for (int i = 0; i < _w; ++i)
+    {
+        for (int j = 0; j < _h; ++j)
+        {
+            writePixel(i, j, color);
+        }
+    }
 }
