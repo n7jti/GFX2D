@@ -17,7 +17,7 @@ void Gfx2d::end(void)
 
 void Gfx2d::writeFastHLine(int32_t x, int32_t y, int32_t w, uint32_t color)
 {
-    // Set 'w' horizantal pixels starting with x
+    // Set 'w' horizontal pixels starting with x
     for (int32_t i = 0; i < w; ++i)
     {
         drawPixel(x + i, y, color);
@@ -84,7 +84,7 @@ void Gfx2d::writeLineLow(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_
 
 void Gfx2d::writeLineHigh(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color)
 {
-    // writeLine is based on the Midpoint Algorithym from chapter 3 of "Computer Graphics
+    // writeLine is based on the Midpoint Algorithm from chapter 3 of "Computer Graphics
     // Principles and pratice" Second Edition in C by Foley, Dam , et al. (c) 1996
     int32_t dx = x1 - x0;
     int32_t dy = y1 - y0;
@@ -120,9 +120,9 @@ void Gfx2d::writeLineHigh(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32
 
 void Gfx2d::writeLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color)
 {
-    // writeLine is based on the Midpoint Algorithym from chapter 3 of "Computer Graphics
+    // writeLine is based on the Midpoint Algorithm from chapter 3 of "Computer Graphics
     // Principles and pratice" Second Edition in C by Foley, Dam , et al. (c) 1996, combined
-    // with generalizations from Wikiped's article on Bresenham's line algorithm
+    // with generalizations from wikipedia's article on Bresenham's line algorithm
     if (abs(y1 - y0) < abs(x1 - x0))
     {
         if (x0 > x1)
@@ -163,4 +163,87 @@ void Gfx2d::fillScreen(uint32_t color)
             writePixel(i, j, color);
         }
     }
+}
+
+// bitmap
+void Gfx2d::drawBitmap(int32_t x, int32_t y, const uint8_t *bitmap, int32_t w, int32_t h, uint32_t color)
+{
+    uint8_t width = (w + 7) / 8; // The bitmap stride is assumed to be in whole bytes, even if the bitmap itself isn't.
+    uint8_t byte = 0;
+
+    begin();
+
+    // loop over the height in bits
+    for (int32_t i = 0; i < h; i++)
+    {
+        // loop over the width in bits
+        for (int32_t j = 0; j < w; j++)
+        {
+            // if any of the first three bits are set then we are not divisible by 8. So if we are not divisible by 8
+            // then shift the bits to the right.
+            if (j & 7)
+            {
+                // shift the bits to the right
+                byte = byte << 1;
+            }
+            else // if we are divisible by 8.
+            {
+                // read in a new bit.
+                byte = bitmap[(i * width) + (j / 8)];
+            }
+
+            // if the top bit of our byte is set
+            if (byte & 0x80)
+            {
+                // write out the color
+                writePixel(x + i, y, color);
+            }
+        }
+        y++; // Increment y
+    }
+
+    end();
+}
+
+// bitmap
+void Gfx2d::drawBitmap(int32_t x, int32_t y, const uint8_t *bitmap, int32_t w, int32_t h, uint32_t color, uint32_t bg)
+{
+    uint8_t width = (w + 7) / 8; // The bitmap stride is assumed to be in whole bytes, even if the bitmap itself isn't.
+    uint8_t byte = 0;
+
+    begin();
+
+    // loop over the height in bits
+    for (int32_t i = 0; i < h; i++)
+    {
+        // loop over the width in bits
+        for (int32_t j = 0; j < w; j++)
+        {
+            // if any of the first three bits are set then we are not divisible by 8. So if we are not divisible by 8
+            // then shift the bits to the right.
+            if (j & 7)
+            {
+                // shift the bits to the right
+                byte = byte << 1;
+            }
+            else // if we are divisible by 8.
+            {
+                // read in a new bit.
+                byte = bitmap[(i * width) + (j / 8)];
+            }
+
+            // if the top bit of our byte is set
+            if (byte & 0x80)
+            {
+                // write out the color
+                writePixel(x + i, y + i, color);
+            }
+            else
+            {
+                writePixel(x + i, y + i, bg);
+            }
+        }
+    }
+
+    end();
 }
