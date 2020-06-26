@@ -20,7 +20,7 @@ void Gfx2d::writeFastHLine(int32_t x, int32_t y, int32_t w, uint32_t color)
     // Set 'w' horizantal pixels starting with x
     for (int32_t i = 0; i < w; ++i)
     {
-        setPixel(x + i, y, color);
+        drawPixel(x + i, y, color);
     }
     return;
 }
@@ -30,14 +30,18 @@ void Gfx2d::writeFastVLine(int32_t x, int32_t y, int32_t h, uint32_t color)
     // Set 'h' vertical pixels starting with y
     for (int32_t i = 0; i < h; ++i)
     {
-        setPixel(x, y + i, color);
+        drawPixel(x, y + i, color);
     }
     return;
 }
 
 void Gfx2d::writeFillRect(int32_t x, int32_t y, int32_t w, int32_t h, uint32_t color)
 {
-    // TODO: implement writeFillRect
+    // Implement Fill Rect as a series of lines
+    for (int i = 0; i < h; ++i)
+    {
+        writeFastHLine(x, y + i, w, color);
+    }
     return;
 }
 
@@ -134,21 +138,19 @@ void Gfx2d::writeLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t c
     {
         if (y0 > y1)
         {
-            //writeLineHigh(x1, y1, x0, y0, color);
-            writeLineLow(y1, x1, y0, x0, color);
+            writeLineHigh(x1, y1, x0, y0, color);
         }
         else
         {
-            //writeLineHigh(x0, y0, x1, y1, color);
-            writeLineLow(y0, x0, y1, x1, color);
+            writeLineHigh(x0, y0, x1, y1, color);
         }
     }
 }
 
 void Gfx2d::writePixel(int32_t x, int32_t y, uint32_t color)
 {
-    // Default implementation falls through to setPixel
-    setPixel(x, y, color);
+    // Default implementation falls through to drawPixel
+    drawPixel(x, y, color);
     return;
 }
 

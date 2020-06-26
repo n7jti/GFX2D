@@ -11,7 +11,7 @@ public:
     {
     }
 
-    virtual void setPixel(int32_t x, int32_t y, uint32_t color) = 0;
+    virtual void drawPixel(int32_t x, int32_t y, uint32_t color) = 0;
 
     virtual void begin(void);
     virtual void end(void);
@@ -42,7 +42,7 @@ public:
         static_assert(WIDTH > 0);
     };
 
-    void Gfx2dCanvas<T, WIDTH, HEIGHT>::setPixel(int32_t x, int32_t y, uint32_t color)
+    void Gfx2dCanvas<T, WIDTH, HEIGHT>::drawPixel(int32_t x, int32_t y, uint32_t color)
     {
         if ((x >= 0 && x < _w) && (y >= 0 && y < _h))
         {
